@@ -1,13 +1,10 @@
-
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message, BotCommand
 from aiogram.filters import Command
-from request_system import download_images
 from sending_system import send_category_images
 import urls
-
-
 from messages_to_user import starting_message, info_message
+from token_reader import TOKEN
 
 
 

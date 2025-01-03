@@ -1,4 +1,3 @@
-TOKEN = '7837328120:AAHSBCEgVdj7xfI6dVz7XHoLg3nE3lHfdtM'
 Superheroes = 'https://hdqwalls.com/category/superheroes-wallpapers'
 Games = 'https://hdqwalls.com/category/games-wallpapers'
 Artist = 'https://hdqwalls.com/category/artist-wallpapers'

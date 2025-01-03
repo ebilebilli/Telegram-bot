@@ -15,4 +15,5 @@ async def send_category_images(message: types.Message, category_url):
         full_path = os.path.abspath(file_path)
 
         await message.answer_document(FSInputFile(full_path))
+        
      
