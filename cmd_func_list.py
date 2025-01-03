@@ -1,13 +1,18 @@
-import asyncio
-from aiogram import Bot, Dispatcher, F
+
+from aiogram import Bot, Dispatcher
 from aiogram.types import Message, BotCommand
 from aiogram.filters import Command
 from request_system import download_images
-from aiogram.types import InputFile
-
-
+from sending_system import send_category_images
 import urls
+
+
 from messages_to_user import starting_message, info_message
+
+
+
+bot = Bot(token=urls.TOKEN)
+dp = Dispatcher()
 
 async def command_list():
     commands = [
@@ -35,232 +40,87 @@ async def command_list():
     ]
     await bot.set_my_commands(commands)
 
-
-
-bot = Bot(token=urls.TOKEN)
-dp = Dispatcher()
-
 @dp.message(Command('start'))
 async def cmd_start(message: Message):
     await message.answer(starting_message)
 
 @dp.message(Command('info'))
-async def cmd_talk(message: Message):
+async def cmd_info(message: Message):
     await message.answer(info_message)
+
+
 @dp.message(Command('abstract'))
-async def cmd_abstract(message: Message):
-    category_url = urls.Abstract
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
+async def cmd_artist(message: Message):
+    await send_category_images(message, urls.Abstract)
 
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)
-        await message.answer_document(open(file_path, "rb"))
+@dp.message(Command('anime'))
+async def cmd_artist(message: Message):
+    await send_category_images(message, urls.Anime)
 
-# Superheroes category
-@dp.message(Command('superheroes'))
-async def cmd_superheroes(message: Message):
-    category_url = urls.Superheroes
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Games category
-@dp.message(Command('games'))
-async def cmd_games(message: Message):
-    category_url = urls.Games
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Artist category
 @dp.message(Command('artist'))
 async def cmd_artist(message: Message):
-    category_url = urls.Artist
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
+    await send_category_images(message, urls.Artist)
 
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Movies category
-@dp.message(Command('movies'))
-async def cmd_movies(message: Message):
-    category_url = urls.Movies
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Celebrities category
-@dp.message(Command('celebrities'))
-async def cmd_celebrities(message: Message):
-    category_url = urls.Celebrities
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Cars category
-@dp.message(Command('cars'))
-async def cmd_cars(message: Message):
-    category_url = urls.Cars
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Nature category
-@dp.message(Command('nature'))
-async def cmd_nature(message: Message):
-    category_url = urls.Nature
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Girls category
-@dp.message(Command('girls'))
-async def cmd_girls(message: Message):
-    category_url = urls.Girls
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# TV Shows category
-@dp.message(Command('tv_shows'))
-async def cmd_tv_shows(message: Message):
-    category_url = urls.TV_Shows
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Anime category
-@dp.message(Command('anime'))
-async def cmd_anime(message: Message):
-    category_url = urls.Anime
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-# Music category
-@dp.message(Command('music'))
-async def cmd_music(message: Message):
-    category_url = urls.Music
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Photography category
-@dp.message(Command('photography'))
-async def cmd_photography(message: Message):
-    category_url = urls.Photography
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Computer category
-@dp.message(Command('computer'))
-async def cmd_computer(message: Message):
-    category_url = urls.Computer
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Animals category
-@dp.message(Command('animals'))
-async def cmd_animals(message: Message):
-    category_url = urls.Animals
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Universe category
-@dp.message(Command('universe'))
-async def cmd_universe(message: Message):
-    category_url = urls.Universe
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# World category
-@dp.message(Command('world'))
-async def cmd_world(message: Message):
-    category_url = urls.World
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
-
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
-
-# Bikes category
 @dp.message(Command('bikes'))
 async def cmd_bikes(message: Message):
-    category_url = urls.Bikes
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
+    await send_category_images(message, urls.Bikes)
 
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
+@dp.message(Command('cars'))
+async def cmd_cars(message: Message):
+    await send_category_images(message, urls.Cars)
 
-# Fantasy Girls category
+@dp.message(Command('celebrities'))
+async def cmd_celebrities(message: Message):
+    await send_category_images(message, urls.Celebrities)
+
+@dp.message(Command('computer'))
+async def cmd_computer(message: Message):
+    await send_category_images(message, urls.Computer)
+
 @dp.message(Command('fantasy_girls'))
 async def cmd_fantasy_girls(message: Message):
-    category_url = urls.Fantasy_Girls
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
+    await send_category_images(message, urls.Fantasy_Girls)
 
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
+@dp.message(Command('games'))
+async def cmd_games(message: Message):
+    await send_category_images(message, urls.Games)
 
-# Love category
+@dp.message(Command('girls'))
+async def cmd_girls(message: Message):
+    await send_category_images(message, urls.Girls)
+
 @dp.message(Command('love'))
 async def cmd_love(message: Message):
-    category_url = urls.Love
-    await message.answer("Images downloading...")
-    downloaded_files = download_images(category_url, num_images=10)
+    await send_category_images(message, urls.Love)
 
-    for file_path in downloaded_files:
-        input_file = InputFile(file_path)  
-        await message.answer_document(input_file)
+@dp.message(Command('movies'))
+async def cmd_movies(message: Message):
+    await send_category_images(message, urls.Movies)
+
+@dp.message(Command('music'))
+async def cmd_music(message: Message):
+    await send_category_images(message, urls.Music)
+
+@dp.message(Command('nature'))
+async def cmd_nature(message: Message):
+    await send_category_images(message, urls.Nature)
+
+@dp.message(Command('photography'))
+async def cmd_photography(message: Message):
+    await send_category_images(message, urls.Photography)
+
+@dp.message(Command('superheroes'))
+async def cmd_superheroes(message: Message):
+    await send_category_images(message, urls.Superheroes)
+
+@dp.message(Command('tv_shows'))
+async def cmd_tv_shows(message: Message):
+    await send_category_images(message, urls.TV_Shows)
+
+@dp.message(Command('universe'))
+async def cmd_universe(message: Message):
+    await send_category_images(message, urls.Universe)
+
+@dp.message(Command('world'))
+async def cmd_world(message: Message):
+    await send_category_images(message, urls.World)
