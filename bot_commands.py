@@ -2,13 +2,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message, BotCommand
 from aiogram.filters import Command
 from sending_system import send_category_images
-import urls
-from messages_to_user import starting_message, info_message
-from token_reader import TOKEN
+import settings
 
-
-
-bot = Bot(token=urls.TOKEN)
+bot = Bot(token=settings.TOKEN)
 dp = Dispatcher()
 
 async def command_list():
@@ -37,87 +33,84 @@ async def command_list():
     ]
     await bot.set_my_commands(commands)
 
-@dp.message(Command('start'))
-async def cmd_start(message: Message):
-    await message.answer(starting_message)
 
 @dp.message(Command('info'))
 async def cmd_info(message: Message):
-    await message.answer(info_message)
+    await message.answer(settings.INFO_MESSAGE)
 
 
 @dp.message(Command('abstract'))
 async def cmd_artist(message: Message):
-    await send_category_images(message, urls.Abstract)
+    await send_category_images(message, settings.ABSTRACT)
 
 @dp.message(Command('anime'))
 async def cmd_artist(message: Message):
-    await send_category_images(message, urls.Anime)
+    await send_category_images(message, settings.ANIME)
 
 @dp.message(Command('artist'))
 async def cmd_artist(message: Message):
-    await send_category_images(message, urls.Artist)
+    await send_category_images(message, settings.ARTIST)
 
 @dp.message(Command('bikes'))
 async def cmd_bikes(message: Message):
-    await send_category_images(message, urls.Bikes)
+    await send_category_images(message, settings.BIKES)
 
 @dp.message(Command('cars'))
 async def cmd_cars(message: Message):
-    await send_category_images(message, urls.Cars)
+    await send_category_images(message, settings.CARS)
 
 @dp.message(Command('celebrities'))
 async def cmd_celebrities(message: Message):
-    await send_category_images(message, urls.Celebrities)
+    await send_category_images(message, settings.CELEBRITIES)
 
 @dp.message(Command('computer'))
 async def cmd_computer(message: Message):
-    await send_category_images(message, urls.Computer)
+    await send_category_images(message, settings.COMPUTER)
 
 @dp.message(Command('fantasy_girls'))
 async def cmd_fantasy_girls(message: Message):
-    await send_category_images(message, urls.Fantasy_Girls)
+    await send_category_images(message, settings.FANTASY_GIRLS)
 
 @dp.message(Command('games'))
 async def cmd_games(message: Message):
-    await send_category_images(message, urls.Games)
+    await send_category_images(message, settings.GAMES)
 
 @dp.message(Command('girls'))
 async def cmd_girls(message: Message):
-    await send_category_images(message, urls.Girls)
+    await send_category_images(message, settings.GIRLS)
 
 @dp.message(Command('love'))
 async def cmd_love(message: Message):
-    await send_category_images(message, urls.Love)
+    await send_category_images(message, settings.LOVE)
 
 @dp.message(Command('movies'))
 async def cmd_movies(message: Message):
-    await send_category_images(message, urls.Movies)
+    await send_category_images(message, settings.MOVIES)
 
 @dp.message(Command('music'))
 async def cmd_music(message: Message):
-    await send_category_images(message, urls.Music)
+    await send_category_images(message, settings.MUSIC)
 
 @dp.message(Command('nature'))
 async def cmd_nature(message: Message):
-    await send_category_images(message, urls.Nature)
+    await send_category_images(message, settings.NATURE)
 
 @dp.message(Command('photography'))
 async def cmd_photography(message: Message):
-    await send_category_images(message, urls.Photography)
+    await send_category_images(message, settings.PHOTOGRAPHY)
 
 @dp.message(Command('superheroes'))
 async def cmd_superheroes(message: Message):
-    await send_category_images(message, urls.Superheroes)
+    await send_category_images(message, settings.SUPERHEROES)
 
 @dp.message(Command('tv_shows'))
 async def cmd_tv_shows(message: Message):
-    await send_category_images(message, urls.TV_Shows)
+    await send_category_images(message, settings.TV_SHOWS)
 
 @dp.message(Command('universe'))
 async def cmd_universe(message: Message):
-    await send_category_images(message, urls.Universe)
+    await send_category_images(message, settings.UNIVERSE)
 
 @dp.message(Command('world'))
 async def cmd_world(message: Message):
-    await send_category_images(message, urls.World)
+    await send_category_images(message, settings.WORLD)

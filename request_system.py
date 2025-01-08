@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-def download_images(category_url, num_images=10):
+def download_images(category_url, num_images=1):
     headers = {
     "User-Agent": "Mozilla/5.0 ...",
     "Accept": "image/webp,image/apng,image/*,*/*;q=0.8"
