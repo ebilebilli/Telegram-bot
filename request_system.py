@@ -1,35 +1,41 @@
 import requests
-from bs4 import BeautifulSoup
 import os
+from settings import API_KEY, SITE_URL
 
-def download_images(category_url, num_images=1):
+def request_system(category_name):
+    site_url = SITE_URL
+    params = {
+        'q': category_name,
+        'apikey': API_KEY,
+        'categories': '100',
+        'purity': '100',
+        'sorting': 'random',
+        'order': 'desc',
+        'page': 1,
+        'resolutions': '1920x1080'
+    }
+
     headers = {
-    "User-Agent": "Mozilla/5.0 ...",
-    "Accept": "image/webp,image/apng,image/*,*/*;q=0.8"
-}
-    try:
-        response = requests.get(category_url, headers=headers)
-        response.raise_for_status()  
-    except requests.exceptions.RequestException as e:
-        print(f'Error: {e}')
-        return []  
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
 
-    soup = BeautifulSoup(response.text, 'html.parser')
-    images = soup.find_all('img')[:num_images]  
+    response = requests.get(site_url, headers=headers, params=params)
+    response.raise_for_status()
+    data = response.json()
 
-    os.makedirs('downloaded_images', exist_ok=True)  
+    os.makedirs('downloaded_images', exist_ok=True)
     downloaded_files = []
-    for img in images:
-        img_url = img.get('src')
-        if img_url:
-            file_name = img_url.split("/")[-1]
-            file_path = os.path.join('downloaded_images', file_name)
-            try:
-                img_data = requests.get(img_url).content
-                with open(file_path, "wb") as file:
-                    file.write(img_data)
-                downloaded_files.append(os.path.abspath(file_path))
-            except Exception as e:
-                print(f'Error downloading {img_url}: {e}')
 
-    return downloaded_files if downloaded_files else None
+    for image in data['data'][5]:
+        img_url = image['path']
+        if img_url:
+            file_name = img_url.split('/')[-1]
+            file_path = os.path.join('downloaded_images', file_name)
+            img_data = requests.get(img_url).content
+
+            with open(file_path, "wb") as file:
+                file.write(img_data)
+                downloaded_files.append(os.path.abspath(file_path))
+
+    return downloaded_files
+
